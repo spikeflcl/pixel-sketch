@@ -1,0 +1,21 @@
+.canvas {
+  width: 400px;
+  height: 400px;
+  margin: auto;
+  border: black solid 2px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.pixel {
+  margin: 0;
+  padding: 0;
+  border: solid black 1px;
+  box-sizing: border-box;
+  transition: scale 0.2s;
+}
+
+.pixel:hover {
+  scale: 1.05;
+  border-width: 3px;
+}
