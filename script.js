@@ -13,9 +13,25 @@ function createCanvas(sideCount) {
 function setDraw(pixels) {
   let color = 'black';
   let isDrawing = false;
+  let eraserMode = false;
   const draw = (e) => {
-    e.target.style.backgroundColor = color;
+    if (eraserMode) {
+      e.target.style.backgroundColor = '';
+    } else {
+      e.target.style.backgroundColor = color;
+    }
   };
+
+  const brushToggle = document.querySelector('.brush')
+  const eraserToggle = document.querySelector('.eraser')
+
+  brushToggle.addEventListener('change', (e) => {
+    if (e.target.checked) eraserMode = false;
+  });
+
+  eraserToggle.addEventListener('change', (e) => {
+    if (e.target.checked) eraserMode = true;
+  });
 
   const mouseDown = (e) => {
     isDrawing = true;
@@ -45,19 +61,38 @@ function setDraw(pixels) {
 
 function clearCanvas(pixels) {
   pixels.forEach(px => {
-    px.style.backgroundColor = 'transparent';
+    px.style.backgroundColor = '';
   })
+}
+
+function eraserMode() {
+
 }
 
 const canvas = document.querySelector('.canvas');
 const pixels = createCanvas(40);
 const clearButton = document.querySelector('.clear-button');
 const colorPicker = document.querySelector('.color-picker');
+const brush = document.querySelector('.brush');
+const eraser = document.querySelector('.eraser');
+const gridToggle = document.querySelector('.grid-toggle');
 
+const draw = setDraw(pixels);
 
 clearButton.addEventListener('click', () => {clearCanvas(pixels)});
-const draw = setDraw(pixels);
 
 colorPicker.addEventListener('change', (e) => {
   draw.setColor(e.target.value);
 });
+
+gridToggle.addEventListener('click', (e) => {
+  if (e.target.checked) {
+    pixels.forEach(px => {
+      px.style.borderWidth = '1px';
+    })
+  } else {
+    pixels.forEach(px => {
+      px.style.borderWidth = '0px';
+    })
+  }
+})
